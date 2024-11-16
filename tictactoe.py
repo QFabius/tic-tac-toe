@@ -19,6 +19,27 @@ def is_board_full():
                 return False
     return True
 
+def is_winning_move(player):
+    if player == 1:
+        announcement = "Player 1 Won"
+    else:
+        announcement = "Player 2 Won"
+    
+    for row in range(ROWS):
+        if board[row][0] == player and board[row][1] == player and board[row][2] == player:
+            print(announcement)
+            return True
+    for col in range(COLS):
+        if board[0][col] == player and board[1][col] == player and board[2][col] == player:
+            print(announcement)
+            return True
+    if board[0][0] == player and board[1][1] == player and board[2][2] == player:
+        print(announcement)
+        return True
+    if board[0][2] == player and board[1][1] == player and board[2][0] == player:
+        print(announcement)
+        return True
+
 # Initiate board
 board = np.zeros((ROWS,COLS))
 
@@ -33,6 +54,8 @@ while not game_over:
         col = int(input("Player 1: Choose column number (0-2): "))
         if is_valid_mark(row, col):
             mark(row, col, 1)
+            if is_winning_move(1):
+                game_over = True
         else:
             Turn -= 1
     else:
@@ -41,8 +64,12 @@ while not game_over:
         col = int(input("Player 2: Choose column number (0-2): "))
         if is_valid_mark(row, col):
             mark(row, col, 2)
+            if is_winning_move(2):
+                game_over = True
         else:
             Turn -= 1
 
     Turn += 1
     print(board)
+    if game_over == True:
+        print("Game Over")
