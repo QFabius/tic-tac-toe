@@ -19,9 +19,30 @@ def is_board_full():
                 return False
     return True
 
+# Initiate board
 board = np.zeros((ROWS,COLS))
 
-print(board)
-mark(1,0,2)
-print(board)
-print(is_valid_mark(1,0))
+game_over = False
+
+Turn = 0
+
+while not game_over:
+    if Turn % 2 == 0:
+        # Player 1
+        row = int(input("Player 1: Choose row number (0-2): "))
+        col = int(input("Player 1: Choose column number (0-2): "))
+        if is_valid_mark(row, col):
+            mark(row, col, 1)
+        else:
+            Turn -= 1
+    else:
+        # Player 2
+        row = int(input("Player 2: Choose row number (0-2): "))
+        col = int(input("Player 2: Choose column number (0-2): "))
+        if is_valid_mark(row, col):
+            mark(row, col, 2)
+        else:
+            Turn -= 1
+
+    Turn += 1
+    print(board)
